@@ -70,11 +70,19 @@ PODS:
   - nanopb/encode (2.30907.0)
   - NMapsMap (3.10.2)
   - PromisesObjC (1.2.12)
+  - RxCocoa (6.1.0):
+    - RxRelay (= 6.1.0)
+    - RxSwift (= 6.1.0)
+  - RxRelay (6.1.0):
+    - RxSwift (= 6.1.0)
+  - RxSwift (6.1.0)
 
 DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Database
   - NMapsMap
+  - RxCocoa
+  - RxSwift
 
 SPEC REPOS:
   trunk:
@@ -91,6 +99,9 @@ SPEC REPOS:
     - nanopb
     - NMapsMap
     - PromisesObjC
+    - RxCocoa
+    - RxRelay
+    - RxSwift
 
 SPEC CHECKSUMS:
   Firebase: 09fb40287b6dfc8ee65f726fa0b788719d3f2a07
@@ -106,7 +117,10 @@ SPEC CHECKSUMS:
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   NMapsMap: 2c092c6408c738774edea41e00f0fd1bad9e0ca9
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
+  RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
+  RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe
+  RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
 
-PODFILE CHECKSUM: de5f37f2aac4eca0a1efbefc311acd17e2fd391c
+PODFILE CHECKSUM: 6a5d0f8e27c23ee7848e9b5fcc499c83006d0c7d
 
 COCOAPODS: 1.10.0
