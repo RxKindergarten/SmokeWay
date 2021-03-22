@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+protocol MainViewModelType {
+    
+    
+}
+
+class MainViewModel: MainViewModelType {
+    
+}
