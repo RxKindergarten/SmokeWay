@@ -19,7 +19,7 @@ protocol MainViewModelType  {
 class MainViewModel: MainViewModelType {
     
     struct Input {
-        let ready: Driver<Void>
+        let ready: Driver<Bool>
         let currentPoint: Driver<MapPoint>
         let selectedPoint: Driver<MapPoint>
         let expansion: Driver<Expansion>
@@ -41,11 +41,21 @@ class MainViewModel: MainViewModelType {
     
     func transform(input: Input) -> Output {
         
+        let loading = input.ready
+        
+        var surroudInfoList : [SmokingPlace] = []
+        
+        
+        
+
+        
    
     }
     
     
     
     
-    
+    let smokingPlaces: [SmokingPlace]
 }
+
+
