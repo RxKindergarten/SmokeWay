@@ -10,12 +10,33 @@ import Firebase
 
 
 class MainVC: UIViewController {
+    
+    // MARK:-  UI Components
+    var placeListContainerView: SmokingPlaceListContainerView = {
+        let view = SmokingPlaceListContainerView(frame: .zero)
+        // 레이아웃 그릴때 아래 코드 지우기
+//        view.isHidden = true
+        return view
+    }()
+    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        initLayout()
         // Do any additional setup after loading the view.
     }
     
+    private func initLayout() {
+        view.addSubview(placeListContainerView)
+        
+        NSLayoutConstraint.activate([
+            placeListContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
+            placeListContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            placeListContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            placeListContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
 
     /*
     // MARK: - Navigation

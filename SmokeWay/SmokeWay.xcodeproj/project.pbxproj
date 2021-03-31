@@ -14,6 +14,7 @@
 		A20C9A322608E6A600AB8243 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20C9A312608E6A600AB8243 /* MainVC.swift */; };
 		A20C9A3C2608E99200AB8243 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A20C9A3B2608E99200AB8243 /* GoogleService-Info.plist */; };
 		A20C9A3F2608EE5200AB8243 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20C9A3E2608EE5200AB8243 /* MainViewModel.swift */; };
+		A20C9A552614E3A900AB8243 /* SmokingPlaceListContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20C9A542614E3A900AB8243 /* SmokingPlaceListContainerView.swift */; };
 		A238DDF32608D914000F50E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A238DDF22608D914000F50E3 /* AppDelegate.swift */; };
 		A238DDF52608D914000F50E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A238DDF42608D914000F50E3 /* SceneDelegate.swift */; };
 		A238DDFA2608D914000F50E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A238DDF82608D914000F50E3 /* Main.storyboard */; };
@@ -31,6 +32,7 @@
 		A20C9A312608E6A600AB8243 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		A20C9A3B2608E99200AB8243 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A20C9A3E2608EE5200AB8243 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		A20C9A542614E3A900AB8243 /* SmokingPlaceListContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingPlaceListContainerView.swift; sourceTree = "<group>"; };
 		A238DDEF2608D914000F50E3 /* SmokeWay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokeWay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A238DDF22608D914000F50E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A238DDF42608D914000F50E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 		A20C9A222608E43600AB8243 /* MainScene */ = {
 			isa = PBXGroup;
 			children = (
+				A20C9A532614E37900AB8243 /* Views */,
 				A238DDF82608D914000F50E3 /* Main.storyboard */,
 				A20C9A312608E6A600AB8243 /* MainVC.swift */,
 				A20C9A3E2608EE5200AB8243 /* MainViewModel.swift */,
@@ -141,6 +144,14 @@
 				A238DDF42608D914000F50E3 /* SceneDelegate.swift */,
 			);
 			path = Supports;
+			sourceTree = "<group>";
+		};
+		A20C9A532614E37900AB8243 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A20C9A542614E3A900AB8243 /* SmokingPlaceListContainerView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		A238DDE62608D914000F50E3 = {
@@ -290,6 +301,7 @@
 				A238DDF32608D914000F50E3 /* AppDelegate.swift in Sources */,
 				A20C9A1A2608E2E500AB8243 /* Networking.swift in Sources */,
 				A20C9A322608E6A600AB8243 /* MainVC.swift in Sources */,
+				A20C9A552614E3A900AB8243 /* SmokingPlaceListContainerView.swift in Sources */,
 				A238DDF52608D914000F50E3 /* SceneDelegate.swift in Sources */,
 				A20C9A102608E23D00AB8243 /* UIColor+Extensions.swift in Sources */,
 			);
