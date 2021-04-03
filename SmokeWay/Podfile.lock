@@ -73,6 +73,9 @@ PODS:
   - RxCocoa (6.1.0):
     - RxRelay (= 6.1.0)
     - RxSwift (= 6.1.0)
+  - RxGesture (4.0.2):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
   - RxRelay (6.1.0):
     - RxSwift (= 6.1.0)
   - RxSwift (6.1.0)
@@ -82,6 +85,7 @@ DEPENDENCIES:
   - Firebase/Database
   - NMapsMap
   - RxCocoa
+  - RxGesture
   - RxSwift
 
 SPEC REPOS:
@@ -100,6 +104,7 @@ SPEC REPOS:
     - NMapsMap
     - PromisesObjC
     - RxCocoa
+    - RxGesture
     - RxRelay
     - RxSwift
 
@@ -118,9 +123,10 @@ SPEC CHECKSUMS:
   NMapsMap: 2c092c6408c738774edea41e00f0fd1bad9e0ca9
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
+  RxGesture: f059f2aeef966fb17dad56ee440e76410f10e55f
   RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe
   RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
 
-PODFILE CHECKSUM: 6a5d0f8e27c23ee7848e9b5fcc499c83006d0c7d
+PODFILE CHECKSUM: 611684c19d1bf3ff142f29f4c925df4bd4ac16cf
 
 COCOAPODS: 1.10.0
