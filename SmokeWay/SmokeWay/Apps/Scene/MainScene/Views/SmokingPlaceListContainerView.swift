@@ -9,6 +9,10 @@ import UIKit
 
 class SmokingPlaceListContainerView: UIView {
 
+    // MARK:- Field
+    let BARVIEW_HEIGHT: CGFloat = 50
+    
+    // MARK:- UIComponets
     var barView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
