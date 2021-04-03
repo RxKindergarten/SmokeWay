@@ -9,35 +9,69 @@ import UIKit
 import Firebase
 import NMapsMap
 import CoreLocation
+import SnapKit
 
 class MainVC: UIViewController,CLLocationManagerDelegate {
-
+    
+    let mapView = NMFMapView()
+    
+    var latitude: Double?  {
+        didSet{
+            print("kkk")
+            print(latitude)
+            
+        }
+    }
+    var longitude: Double?  {
+        didSet{
+            print("kkk")
+            print(longitude)
+            
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setMapView()
+        
+        
+        //        moveToCurrent()
         
         let locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
-        
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        
         locationManager.startUpdatingLocation()
+        let coor = locationManager.location?.coordinate
+        latitude = coor?.latitude
+        longitude = coor?.longitude
+   
+        
+    }
+    
+    
+    
+    
+    
+    func setMapView(){
         
         
-        
-        
-        let marker = NMFMarker()
-        // Do any additional setup after loading the view.
-        let mapView = NMFMapView(frame: view.frame)
         view.addSubview(mapView)
-        mapView.positionMode = .direction
-//        mapView.showLocationButton = true
+        mapView.snp.makeConstraints{
+            $0.top.bottom.leading.trailing.equalToSuperview()
+            
+        }
+        
         let locationOverlay = mapView.locationOverlay
         locationOverlay.hidden = false
         locationOverlay.iconWidth = CGFloat(NMF_LOCATION_OVERLAY_SIZE_AUTO)
         locationOverlay.iconHeight = CGFloat(NMF_LOCATION_OVERLAY_SIZE_AUTO)
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.5666102, lng: 126.9783881))
         
+        mapView.positionMode = .direction
+        
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.5666102, lng: 126.9783881))
+        let marker = NMFMarker()
         marker.position = NMGLatLng(lat: 37.5670135, lng: 126.9783740)
         marker.mapView = mapView
         
@@ -46,21 +80,26 @@ class MainVC: UIViewController,CLLocationManagerDelegate {
         
         cameraUpdate.animation = .fly
         cameraUpdate.animationDuration = 3
+        
+        
         mapView.moveCamera(cameraUpdate)
-        
-        
-        
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("callll")
+        if let coor = manager.location?.coordinate {
+            latitude = coor.latitude
+            longitude = coor.longitude
+            
+            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: Double(coor.latitude), lng: Double(coor.longitude)))
+            cameraUpdate.animation = .fly
+            cameraUpdate.animationDuration = 3
+            mapView.moveCamera(cameraUpdate)
+            
+        }
     }
-    */
-
+    
+    
+    
 }

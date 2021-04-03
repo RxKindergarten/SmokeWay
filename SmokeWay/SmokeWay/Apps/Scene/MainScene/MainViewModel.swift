@@ -18,6 +18,8 @@ protocol MainViewModelType  {
 
 class MainViewModel: MainViewModelType {
     
+    
+    
     struct Input {
         let ready: Driver<Bool>
         let currentPoint: Driver<MapPoint>
@@ -40,22 +42,24 @@ class MainViewModel: MainViewModelType {
     }
     
 //    func transform(input: Input) -> Output {
-//        
-//        let loading = input.ready
-//        
-//        var surroudInfoList : [SmokingPlace] = []
-//        
-//        
-//        
 //
-//        
-//   
+//        let loading = input.ready
+//
+//        var surroudInfoList : [SmokingPlace] = []
+//
+//        let surroundInfos = input.selectedPoint.asDriver()
+//
+//
+//        return Output(loading: loading, surroundInfos: surroundInfos, sortedInfos: <#T##Driver<[SmokingPlace]>#>, exapansion: <#T##Driver<Expansion>#>, detailInfo: <#T##Driver<SmokingPlace>#>)
+//
+//
+//
 //    }
-//    
-//    
-//    
-//    
-//    let smokingPlaces: [SmokingPlace]
+//
+//
+    
+    
+    let smokingPlaces: [SmokingPlace] = []
 }
 
 
