@@ -19,7 +19,6 @@ class SmokingPlaceListContainerView: UIView {
     var swipeView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .lightGray
         return view
     }()
     
@@ -52,14 +51,14 @@ class SmokingPlaceListContainerView: UIView {
             swipeView.topAnchor.constraint(equalTo: topAnchor),
             swipeView.leadingAnchor.constraint(equalTo: leadingAnchor),
             swipeView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            swipeView.heightAnchor.constraint(equalToConstant: 80)
+            swipeView.heightAnchor.constraint(equalToConstant: 50)
         ])
-        
+        // BarView
         NSLayoutConstraint.activate([
             barView.topAnchor.constraint(equalTo: swipeView.topAnchor, constant: 5),
             barView.centerXAnchor.constraint(equalTo: swipeView.centerXAnchor),
             barView.widthAnchor.constraint(equalToConstant: 50),
-            barView.heightAnchor.constraint(equalToConstant: 10)
+            barView.heightAnchor.constraint(equalToConstant: 5)
         ])
         
         // ListTableView
@@ -69,6 +68,15 @@ class SmokingPlaceListContainerView: UIView {
             placeListTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             placeListTableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+        
+        
+        // Make Round
+        clipsToBounds = true
+        layer.cornerRadius = 25
+        layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        setBorder(borderColor: .lightGray, borderWidth: 1)
+        
+        barView.makeRounded(cornerRadius: 2.5)
     }
 }
 
