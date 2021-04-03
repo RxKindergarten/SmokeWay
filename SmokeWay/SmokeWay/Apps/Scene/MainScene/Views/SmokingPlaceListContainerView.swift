@@ -26,6 +26,8 @@ class SmokingPlaceListContainerView: UIView {
     var placeListTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        let nib = UINib(nibName: "PlaceListTVCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "PlaceListTVCell")
         return tableView
     }()
     
@@ -38,6 +40,8 @@ class SmokingPlaceListContainerView: UIView {
     }
     
     private func initLayout() {
+        placeListTableView.dataSource = self
+        
         translatesAutoresizingMaskIntoConstraints = false
         addSubview(placeListTableView)
         addSubview(swipeView)
@@ -66,5 +70,17 @@ class SmokingPlaceListContainerView: UIView {
             placeListTableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
+}
+
+extension SmokingPlaceListContainerView: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PlaceListTVCell", for: indexPath)
+                as? PlaceListTVCell else { return UITableViewCell()}
+        
+        return cell
+    }
 }

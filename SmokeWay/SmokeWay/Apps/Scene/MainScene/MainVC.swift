@@ -6,8 +6,10 @@
 //
 
 import UIKit
-import Firebase
 
+import Firebase
+import RxSwift
+import RxCocoa
 
 class MainVC: UIViewController {
     
@@ -20,7 +22,7 @@ class MainVC: UIViewController {
     }()
     
 
-
+    // MARK:- Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         initLayout()
@@ -36,6 +38,7 @@ class MainVC: UIViewController {
             placeListContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             placeListContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+        
     }
 
     /*
