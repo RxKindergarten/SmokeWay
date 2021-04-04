@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		31F0B01315D5DDBEA18600B9 /* Pods_SmokeWay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E9295B0E5FBF73FAF621F33 /* Pods_SmokeWay.framework */; };
+		31F0B01315D5DDBEA18600B9 /* Pods_SmokeWay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E9295B0E5FBF73FAF621F33 /* Pods_SmokeWay.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		A20C9A102608E23D00AB8243 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20C9A0F2608E23D00AB8243 /* UIColor+Extensions.swift */; };
 		A20C9A162608E29000AB8243 /* SmokingPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20C9A152608E29000AB8243 /* SmokingPlace.swift */; };
 		A20C9A1A2608E2E500AB8243 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20C9A192608E2E500AB8243 /* Networking.swift */; };
@@ -23,6 +23,8 @@
 		A238DDFA2608D914000F50E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A238DDF82608D914000F50E3 /* Main.storyboard */; };
 		A238DDFC2608D915000F50E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A238DDFB2608D915000F50E3 /* Assets.xcassets */; };
 		A238DDFF2608D915000F50E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A238DDFD2608D915000F50E3 /* LaunchScreen.storyboard */; };
+		EC1E6C6E260B670A00CCA8A4 /* MapPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1E6C6D260B670A00CCA8A4 /* MapPoint.swift */; };
+		EC1E6C71260B67E900CCA8A4 /* Expansion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1E6C70260B67E900CCA8A4 /* Expansion.swift */; };
 		A2EC393E261620DC0011B325 /* PlaceListTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EC393C261620DC0011B325 /* PlaceListTVCell.swift */; };
 		A2EC393F261620DC0011B325 /* PlaceListTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2EC393D261620DC0011B325 /* PlaceListTVCell.xib */; };
 /* End PBXBuildFile section */
@@ -48,6 +50,9 @@
 		A238DDFB2608D915000F50E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A238DDFE2608D915000F50E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A238DE002608D915000F50E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = SmokeWay/Supports/Info.plist; sourceTree = SOURCE_ROOT; };
+		EC1E6C6D260B670A00CCA8A4 /* MapPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPoint.swift; sourceTree = "<group>"; };
+		EC1E6C70260B67E900CCA8A4 /* Expansion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expansion.swift; sourceTree = "<group>"; };
+		EC8C09B12615E0A30061F28C /* NMapsMap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NMapsMap.framework; path = Pods/NMapsMap/framework/NMapsMap.framework; sourceTree = "<group>"; };
 		A2EC393C261620DC0011B325 /* PlaceListTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListTVCell.swift; sourceTree = "<group>"; };
 		A2EC393D261620DC0011B325 /* PlaceListTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceListTVCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				0E9295B0E5FBF73FAF621F33 /* Pods_SmokeWay.framework */,
+				EC8C09B12615E0A30061F28C /* NMapsMap.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -96,6 +102,8 @@
 			isa = PBXGroup;
 			children = (
 				A20C9A0E2608E1E900AB8243 /* Extensions */,
+				EC1E6C6D260B670A00CCA8A4 /* MapPoint.swift */,
+				EC1E6C70260B67E900CCA8A4 /* Expansion.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -321,6 +329,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A20C9A3F2608EE5200AB8243 /* MainViewModel.swift in Sources */,
+				EC1E6C71260B67E900CCA8A4 /* Expansion.swift in Sources */,
+				EC1E6C6E260B670A00CCA8A4 /* MapPoint.swift in Sources */,
 				A20C9A162608E29000AB8243 /* SmokingPlace.swift in Sources */,
 				A238DDF32608D914000F50E3 /* AppDelegate.swift in Sources */,
 				A20C9A5F2614E8BC00AB8243 /* UITextField+Extensions.swift in Sources */,
@@ -480,12 +490,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HAWSBW2KW5;
+				DEVELOPMENT_TEAM = 6ZTQ76LJPZ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/NMapsMap/framework",
+				);
 				INFOPLIST_FILE = SmokeWay/Supports/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = Juhyeoklee.SmokeWay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -500,12 +515,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HAWSBW2KW5;
+				DEVELOPMENT_TEAM = 6ZTQ76LJPZ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/NMapsMap/framework",
+				);
 				INFOPLIST_FILE = SmokeWay/Supports/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = Juhyeoklee.SmokeWay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
