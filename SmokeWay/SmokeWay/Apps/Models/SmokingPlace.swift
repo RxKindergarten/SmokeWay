@@ -9,6 +9,9 @@ import Foundation
 
 struct SmokingPlace{
     
-    
+    var idx: Int
+    var name: String
+    var mapPoint: MapPoint
+    var detail: [String]
     
 }

@@ -9,6 +9,6 @@ import Foundation
 import UIKit
 
 struct MapPoint {
-    var latitude: CGFloat
-    var longitude: CGFloat
+    var latitude: Double
+    var longitude: Double
 }
