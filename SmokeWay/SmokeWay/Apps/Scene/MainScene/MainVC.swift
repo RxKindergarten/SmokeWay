@@ -22,17 +22,32 @@ class MainVC: UIViewController {
             moveToPoint(latitude: currentPoint?.latitude ?? 0.0, longitude: currentPoint?.longitude ?? 0.0)
         }
     }
-    
+    var placeListContainerView: SmokingPlaceListContainerView = {
+        let view = SmokingPlaceListContainerView(frame: .zero)
+        return view
+    }()
 
+    // MARK:- Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setMapView()
-        
+        initLayout()
         
      
     }
-    
+    private func initLayout() {
+        view.addSubview(placeListContainerView)
+        
+        NSLayoutConstraint.activate([
+            placeListContainerView.topAnchor.constraint(equalTo: view.topAnchor,
+                                                        constant: view.frame.height - placeListContainerView.BARVIEW_HEIGHT),
+            placeListContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            placeListContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            placeListContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+    }
     
     func moveToPoint(latitude: Double, longitude: Double){
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: latitude, lng: longitude))
@@ -40,7 +55,7 @@ class MainVC: UIViewController {
         cameraUpdate.animationDuration = 3
         mapView.moveCamera(cameraUpdate)
     }
-    
+       
     
     func setMapView(){
         
@@ -56,8 +71,6 @@ class MainVC: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
   
-        
-
         
 //        현재위치 Overlay
         let locationOverlay = mapView.locationOverlay
