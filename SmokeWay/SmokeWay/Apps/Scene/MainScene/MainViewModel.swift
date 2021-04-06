@@ -18,21 +18,22 @@ protocol MainViewModelType  {
 
 class MainViewModel: MainViewModelType {
     
-    
+    var smokingPlaces: [SmokingPlace] = []
+    let disposeBag = DisposeBag()
     
     struct Input {
-        let ready: Observable<Bool>
-        let currentPoint: Driver<MapPoint>
-        let selectedPoint: Driver<MapPoint>
-        let expansion: Observable<Expansion>
+        let ready: Driver<Bool>
+        let currentPoint: Observable<MapPoint>
+//        let selectedPoint: Driver<MapPoint>
+//        let expansion: Observable<Expansion>
     }
     
     struct Output {
         let loading: Driver<Bool>
         let surroundInfos: Driver<[SmokingPlace]>
-        let sortedInfos: Driver<[SmokingPlace]>
-        let exapansion: Driver<Expansion>
-        let detailInfo: Driver<SmokingPlace>
+//        let sortedInfos: Driver<[SmokingPlace]>
+//        let exapansion: Driver<Expansion>
+//        let detailInfo: Driver<SmokingPlace>
         
     }
     
@@ -41,42 +42,48 @@ class MainViewModel: MainViewModelType {
         
     }
     
-//    func transform(input: Input) -> Output {
-//
-//        let loading = input.ready
-//
-//        var surroudInfoList : [SmokingPlace] = []
-//        var curpos: MapPoint
-//
-//        let currentPosition = input.currentPoint { (latitude, longitude) in
-//            return MapPoint(latitude: latitude, longitude: longitude)
-//
-//
-//        }
-//
-//        input.currentPoint
-//            .subscribe(onNext: {_ in
-//                currentPosition = input.currentPoint
-//
-//            })
-//
-//        for place in smokingPlaces {
-//            if place.mapPoint.latitude >= currentPosition.lati
-//        }
-//
-//
-//
-//
-//        return Output(loading: loading, surroundInfos: surroundInfos, sortedInfos: <#T##Driver<[SmokingPlace]>#>, exapansion: <#T##Driver<Expansion>#>, detailInfo: <#T##Driver<SmokingPlace>#>)
-//
-//
-//
-//    }
+    func getNearbyPlaces(latitude: Double,longitude: Double) -> [SmokingPlace] {
+        var nearBy :[SmokingPlace] = []
+        for place in smokingPlaces {
+            if place.mapPoint.latitude >= latitude*0.9 && place.mapPoint.latitude >= latitude*1.1
+                && place.mapPoint.longitude >= longitude*0.9  && place.mapPoint.longitude >= longitude*1.1 {
+                nearBy.append(place)
+            }
+        }
+        return nearBy
+    }
+    
+    
+    func transform(input: Input) -> Output {
+
+        let loading = input.ready
+        var surroudInfoList : [SmokingPlace] = []
+        let surroundRelay = BehaviorRelay(value: [SmokingPlace(idx: 0, name: "1", mapPoint: MapPoint(latitude: 0.0, longitude: 0.0), detail: ["123"])])
+
+
+        
+        input.currentPoint
+            .subscribe(onNext: { mapPoint in
+                surroudInfoList = []
+                for place in self.smokingPlaces {
+                    if place.mapPoint.latitude >= mapPoint.latitude*0.9 && place.mapPoint.latitude >= mapPoint.latitude*1.1
+                        && place.mapPoint.longitude >= mapPoint.longitude*0.9  && place.mapPoint.longitude >= mapPoint.longitude*1.1 {
+                        surroudInfoList.append(place)
+                        
+                    }
+                }
+                surroundRelay.accept(surroudInfoList)
+            }).disposed(by: disposeBag)
+
+     
+        
+        return Output(loading: loading, surroundInfos: surroundRelay.asDriver(onErrorJustReturn: []))
+    }
 
 
     
     
-    let smokingPlaces: [SmokingPlace] = []
+    
 }
 
 

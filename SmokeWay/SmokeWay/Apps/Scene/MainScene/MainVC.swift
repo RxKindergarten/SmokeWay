@@ -10,18 +10,30 @@ import Firebase
 import NMapsMap
 import CoreLocation
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class MainVC: UIViewController {
     
     let mapView = NMFMapView()
     let locationManager = CLLocationManager()
+    let ready = BehaviorRelay(value: true)
+    let currentPointRelay = BehaviorRelay(value: MapPoint(latitude: 0.0, longitude: 0.0))
+    var mainViewModel = MainViewModel()
+    
     var currentPoint: MapPoint? {
         didSet{
             let locationOverlay = mapView.locationOverlay
             locationOverlay.location = NMGLatLng(lat: currentPoint?.latitude ?? 0.0, lng: currentPoint?.longitude ?? 0.0)
             moveToPoint(latitude: currentPoint?.latitude ?? 0.0, longitude: currentPoint?.longitude ?? 0.0)
+            currentPointRelay.accept(currentPoint!)
         }
     }
+    
+    
+    private lazy var input = MainViewModel.Input(ready: ready.asDriver() , currentPoint: currentPointRelay.asObservable())
+    private lazy var output = mainViewModel.transform(input: input)
+    
     var placeListContainerView: SmokingPlaceListContainerView = {
         let view = SmokingPlaceListContainerView(frame: .zero)
         return view
@@ -33,9 +45,17 @@ class MainVC: UIViewController {
 
         setMapView()
         initLayout()
-        
+        bindViewModel()
      
     }
+    
+    private func bindViewModel() {
+        print("bindViewModel")
+        print(output.surroundInfos)
+        
+        
+    }
+    
     private func initLayout() {
         view.addSubview(placeListContainerView)
         
