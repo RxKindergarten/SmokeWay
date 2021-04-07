@@ -20,13 +20,14 @@ class MainVC: UIViewController {
     let ready = BehaviorRelay(value: true)
     let currentPointRelay = BehaviorRelay(value: MapPoint(latitude: 0.0, longitude: 0.0))
     var mainViewModel = MainViewModel()
-    
+    var disposeBag = DisposeBag()
     var currentPoint: MapPoint? {
         didSet{
             let locationOverlay = mapView.locationOverlay
             locationOverlay.location = NMGLatLng(lat: currentPoint?.latitude ?? 0.0, lng: currentPoint?.longitude ?? 0.0)
             moveToPoint(latitude: currentPoint?.latitude ?? 0.0, longitude: currentPoint?.longitude ?? 0.0)
             currentPointRelay.accept(currentPoint!)
+            
         }
     }
     
@@ -52,6 +53,7 @@ class MainVC: UIViewController {
     private func bindViewModel() {
         print("bindViewModel")
         print(output.surroundInfos)
+
         
         
     }
@@ -125,6 +127,7 @@ extension MainVC: CLLocationManagerDelegate {
         print("didUpdateLocations")
         if let coor = manager.location?.coordinate {
             currentPoint = MapPoint(latitude: coor.latitude, longitude: coor.longitude)
+//            print(currentPoint)
         }
     }
     

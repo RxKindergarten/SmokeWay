@@ -18,7 +18,11 @@ protocol MainViewModelType  {
 
 class MainViewModel: MainViewModelType {
     
-    var smokingPlaces: [SmokingPlace] = []
+    var smokingPlaces: [SmokingPlace] = [SmokingPlace(idx: 1, name: "1", mapPoint: MapPoint(latitude: 37.0, longitude: 127.0), detail: ["test1"]),
+                                         SmokingPlace(idx: 2, name: "2", mapPoint: MapPoint(latitude: 3.0, longitude: 127.0), detail: ["test2"]),
+                                         SmokingPlace(idx: 3, name: "3", mapPoint: MapPoint(latitude: 39.0, longitude: 105.0), detail: ["test3"]),
+                                         SmokingPlace(idx: 4, name: "4", mapPoint: MapPoint(latitude: 35.0, longitude: 121.0), detail: ["test4"])
+    ]
     let disposeBag = DisposeBag()
     
     struct Input {
@@ -68,6 +72,8 @@ class MainViewModel: MainViewModelType {
                 for place in self.smokingPlaces {
                     if place.mapPoint.latitude >= mapPoint.latitude*0.9 && place.mapPoint.latitude >= mapPoint.latitude*1.1
                         && place.mapPoint.longitude >= mapPoint.longitude*0.9  && place.mapPoint.longitude >= mapPoint.longitude*1.1 {
+                        print(place.mapPoint.latitude)
+                        print(mapPoint.latitude)
                         surroudInfoList.append(place)
                         
                     }
@@ -75,8 +81,8 @@ class MainViewModel: MainViewModelType {
                 surroundRelay.accept(surroudInfoList)
             }).disposed(by: disposeBag)
 
-     
-        
+        print("transforming")
+        print(surroudInfoList)
         return Output(loading: loading, surroundInfos: surroundRelay.asDriver(onErrorJustReturn: []))
     }
 
