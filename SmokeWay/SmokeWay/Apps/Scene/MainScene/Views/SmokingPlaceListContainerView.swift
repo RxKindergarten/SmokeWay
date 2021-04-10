@@ -7,10 +7,16 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+import RxGesture
+
 class SmokingPlaceListContainerView: UIView {
 
     // MARK:- Field
-    let BARVIEW_HEIGHT: CGFloat = 50
+    let SWIPEVIEW_HEIGHT: CGFloat = 80
+    let CELL_HEIGHT: CGFloat = 100
+    let panGestureRecognizer = UIPanGestureRecognizer()
     
     // MARK:- UIComponets
     var barView: UIView = {
@@ -22,6 +28,7 @@ class SmokingPlaceListContainerView: UIView {
     
     var swipeView: UIView = {
         let view = UIView()
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -49,13 +56,14 @@ class SmokingPlaceListContainerView: UIView {
         addSubview(placeListTableView)
         addSubview(swipeView)
         swipeView.addSubview(barView)
+        swipeView.addGestureRecognizer(panGestureRecognizer)
         
         // SwipeView
         NSLayoutConstraint.activate([
             swipeView.topAnchor.constraint(equalTo: topAnchor),
             swipeView.leadingAnchor.constraint(equalTo: leadingAnchor),
             swipeView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            swipeView.heightAnchor.constraint(equalToConstant: 50)
+            swipeView.heightAnchor.constraint(equalToConstant: SWIPEVIEW_HEIGHT)
         ])
         // BarView
         NSLayoutConstraint.activate([
@@ -82,6 +90,48 @@ class SmokingPlaceListContainerView: UIView {
         
         barView.makeRounded(cornerRadius: 2.5)
     }
+    
+    internal func asPanGestureDriver() -> Driver<Expansion> {
+        return panGestureRecognizer.rx.event.asDriver().map { [weak self] gesture in
+            guard let strongSelf = self else {
+                return .move(distance: 0)
+            }
+            
+            let transition = gesture.translation(in: strongSelf.swipeView)
+            let velocity = gesture.velocity(in: strongSelf.swipeView)
+            gesture.setTranslation(CGPoint.zero, in: strongSelf.swipeView)
+            
+            // 세로로 움직일 때
+            if abs(velocity.y) > abs(velocity.x) {
+                let isUp = velocity.y < 0
+                if isUp { return strongSelf.moveUp(constant: transition.y, state: gesture.state) }
+                else { return strongSelf.moveDown(constant: transition.y, state: gesture.state) }
+            }
+            
+            return .move(distance: 0)
+        }
+    }
+    
+    private func moveUp(constant: CGFloat, state: UIPanGestureRecognizer.State) -> Expansion {
+        
+        switch state {
+        case .cancelled, .ended, .failed:
+            return .high
+        default:
+            return .move(distance: constant)
+        }
+    }
+    
+    private func moveDown(constant: CGFloat, state: UIPanGestureRecognizer.State) -> Expansion {
+        
+        switch state {
+        case .cancelled, .ended, .failed:
+            return .low
+        default:
+            return .move(distance: constant)
+        }
+    }
+    
 }
 
 extension SmokingPlaceListContainerView: UITableViewDataSource {

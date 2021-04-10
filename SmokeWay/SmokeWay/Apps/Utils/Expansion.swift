@@ -5,10 +5,11 @@
 //  Created by Yunjae Kim on 2021/03/24.
 //
 
-import Foundation
+import UIKit
 
 enum Expansion {
     case low
     case middle
     case high
+    case move(distance: CGFloat)
 }
