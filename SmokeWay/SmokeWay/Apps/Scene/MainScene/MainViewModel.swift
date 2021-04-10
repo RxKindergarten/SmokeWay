@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+
 protocol MainViewModelType  {
     associatedtype Input
     associatedtype Output
@@ -21,18 +22,18 @@ class MainViewModel: MainViewModelType {
     
     
     struct Input {
-        let ready: Observable<Bool>
-        let currentPoint: Driver<MapPoint>
-        let selectedPoint: Driver<MapPoint>
-        let expansion: Observable<Expansion>
+//        let ready: Observable<Bool>
+//        let currentPoint: Driver<MapPoint>
+        let selectedPoint: Driver<MapPoint?>
+        let swipeViewGesture: Driver<Expansion>
     }
     
     struct Output {
-        let loading: Driver<Bool>
-        let surroundInfos: Driver<[SmokingPlace]>
-        let sortedInfos: Driver<[SmokingPlace]>
+//        let loading: Driver<Bool>
+//        let surroundInfos: Driver<[SmokingPlace]>
+//        let sortedInfos: Driver<[SmokingPlace]>
         let exapansion: Driver<Expansion>
-        let detailInfo: Driver<SmokingPlace>
+//        let detailInfo: Driver<SmokingPlace>
         
     }
     
@@ -41,7 +42,26 @@ class MainViewModel: MainViewModelType {
         
     }
     
-//    func transform(input: Input) -> Output {
+    func transform(input: Input) -> Output {
+        let expansion = Observable.combineLatest(input.selectedPoint.asObservable(),
+                                                 input.swipeViewGesture.asObservable()) { (point, swipe) -> Expansion in
+            
+            if let selectPoint = point {
+                return .middle
+            }
+            
+            switch swipe {
+            case .high:
+                return .high
+            case .low:
+                return .low
+            case .move(let distance):
+                return .move(distance: distance)
+            case .middle:
+                return .middle
+            }
+        }
+        
 //
 //        let loading = input.ready
 //
@@ -71,7 +91,9 @@ class MainViewModel: MainViewModelType {
 //
 //
 //
-//    }
+        
+        return Output(exapansion: expansion.asDriver(onErrorJustReturn: .move(distance: 0)))
+    }
 
 
     
