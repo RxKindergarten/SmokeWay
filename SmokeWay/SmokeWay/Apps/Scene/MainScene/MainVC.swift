@@ -28,6 +28,8 @@ class MainVC: UIViewController {
             moveToPoint(latitude: currentPoint?.latitude ?? 0.0, longitude: currentPoint?.longitude ?? 0.0)
             currentPointRelay.accept(currentPoint!)
             
+                
+            
         }
     }
     
