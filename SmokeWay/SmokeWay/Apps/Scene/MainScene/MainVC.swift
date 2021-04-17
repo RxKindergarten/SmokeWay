@@ -27,7 +27,7 @@ class MainVC: UIViewController {
             locationOverlay.location = NMGLatLng(lat: currentPoint?.latitude ?? 0.0, lng: currentPoint?.longitude ?? 0.0)
             moveToPoint(latitude: currentPoint?.latitude ?? 0.0, longitude: currentPoint?.longitude ?? 0.0)
             currentPointRelay.accept(currentPoint!)
-            
+            print(currentPoint)
                 
             
         }
@@ -55,6 +55,19 @@ class MainVC: UIViewController {
     private func bindViewModel() {
         print("bindViewModel")
         print(output.surroundInfos)
+        output.surroundInfos.drive(onNext: { infoList in
+            for info in infoList {
+                let marker = NMFMarker()
+                marker.position = NMGLatLng(lat: info.mapPoint.latitude, lng: info.mapPoint.longitude)
+                marker.mapView = self.mapView
+                print("here")
+                
+            }
+        }, onCompleted: {
+            
+        }, onDisposed: {
+            
+        })
 
         
         
@@ -110,13 +123,7 @@ class MainVC: UIViewController {
         locationOverlay.subIconHeight = 40
         locationOverlay.subAnchor = CGPoint(x: 0.5, y: 1)
         
-//        마커 설정하는 법
-        let marker = NMFMarker()
-        marker.position = NMGLatLng(lat: 37.5670135, lng: 126.9783740)
-        marker.mapView = mapView
-        
-        let infoWindow = NMFInfoWindow()
-        infoWindow.open(with: marker)
+
         
     }
     
