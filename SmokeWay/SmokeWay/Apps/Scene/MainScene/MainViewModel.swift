@@ -24,7 +24,7 @@ class MainViewModel: MainViewModelType {
     struct Input {
 //        let ready: Observable<Bool>
 //        let currentPoint: Driver<MapPoint>
-        let selectedPoint: Driver<MapPoint?>
+        let selectedPoint: Driver<MapPoint>
         let swipeViewGesture: Driver<Expansion>
     }
     
@@ -43,26 +43,10 @@ class MainViewModel: MainViewModelType {
     }
     
     func transform(input: Input) -> Output {
-        let expansion = Observable.combineLatest(input.selectedPoint.asObservable(),
-                                                 input.swipeViewGesture.asObservable()) { (point, swipe) -> Expansion in
-            
-            if let selectPoint = point {
-                return .middle
-            }
-            
-            switch swipe {
-            case .high:
-                return .high
-            case .low:
-                return .low
-            case .move(let distance):
-                return .move(distance: distance)
-            case .middle:
-                return .middle
-            }
-        }
         
-//
+    
+        let expansion = configureExpansion(input.selectedPoint, input.swipeViewGesture)
+        //
 //        let loading = input.ready
 //
 //        var surroudInfoList : [SmokingPlace] = []
@@ -92,9 +76,37 @@ class MainViewModel: MainViewModelType {
 //
 //
         
-        return Output(exapansion: expansion.asDriver(onErrorJustReturn: .move(distance: 0)))
+        return Output(exapansion: expansion)
     }
 
+    
+    func configureExpansion(_ selectedPoint: Driver<MapPoint>,
+                            _ swipeViewGesture: Driver<Expansion>) -> Driver<Expansion> {
+        let validMapPoints = smokingPlaces.map{ $0.mapPoint }
+        
+        let selectedValidInput = selectedPoint.map { return validMapPoints.contains($0) }
+        
+        let expansion = Observable.combineLatest(selectedValidInput.asObservable(),
+                                                 swipeViewGesture.asObservable()) { (isSelected, swipe) -> Expansion in
+            
+            if isSelected {
+                return .middle
+            }
+            
+            switch swipe {
+            case .high:
+                return .high
+            case .low:
+                return .low
+            case .move(let distance):
+                return .move(distance: distance)
+            case .middle:
+                return .middle
+            }
+        }
+        
+        return expansion.asDriver(onErrorJustReturn: .move(distance: 0))
+    }
 
     
     

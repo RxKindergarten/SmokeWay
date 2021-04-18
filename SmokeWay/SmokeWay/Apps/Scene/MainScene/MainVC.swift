@@ -72,7 +72,7 @@ class MainVC: UIViewController {
     }
     
     private func bindViewModel() {
-        let input = MainViewModel.Input(selectedPoint: Driver.just(nil),
+        let input = MainViewModel.Input(selectedPoint: Driver.just(MapPoint(latitude: 0, longitude: 0)),
                                         swipeViewGesture: placeListContainerView.asPanGestureDriver().debug())
         
         let output = mainViewModel.transform(input: input)
