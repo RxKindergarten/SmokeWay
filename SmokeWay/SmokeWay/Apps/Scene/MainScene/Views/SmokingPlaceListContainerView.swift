@@ -90,7 +90,7 @@ class SmokingPlaceListContainerView: UIView {
         
         barView.makeRounded(cornerRadius: 2.5)
     }
-    
+    // MARK:- Internal function
     internal func asPanGestureDriver() -> Driver<Expansion> {
         return panGestureRecognizer.rx.event.asDriver().map { [weak self] gesture in
             guard let strongSelf = self else {
@@ -112,6 +112,13 @@ class SmokingPlaceListContainerView: UIView {
         }
     }
     
+    internal func bindPlaceListViewData(_ sortedInfos: Driver<[SmokingPlace]>) -> Disposable {
+        return sortedInfos.asObservable().bind(to: self.placeListTableView.rx.items(cellIdentifier: "PlaceListTVCell", cellType: PlaceListTVCell.self)){ (index, element, cell) in
+            cell.titleLabel.text = element.name
+            cell.addressLabel.text = element.name
+        }
+    }
+    // MARK:- Private function
     private func moveUp(constant: CGFloat, state: UIPanGestureRecognizer.State) -> Expansion {
         
         switch state {

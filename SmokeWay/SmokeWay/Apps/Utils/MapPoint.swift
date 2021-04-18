@@ -12,3 +12,5 @@ struct MapPoint {
     var latitude: Double
     var longitude: Double
 }
+
+extension MapPoint: Hashable { }
