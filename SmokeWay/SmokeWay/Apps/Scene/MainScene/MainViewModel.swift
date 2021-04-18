@@ -31,7 +31,7 @@ class MainViewModel: MainViewModelType {
     struct Output {
 //        let loading: Driver<Bool>
 //        let surroundInfos: Driver<[SmokingPlace]>
-//        let sortedInfos: Driver<[SmokingPlace]>
+        let sortedInfos: Driver<[SmokingPlace]>
         let exapansion: Driver<Expansion>
 //        let detailInfo: Driver<SmokingPlace>
         
@@ -46,6 +46,7 @@ class MainViewModel: MainViewModelType {
         
     
         let expansion = configureExpansion(input.selectedPoint, input.swipeViewGesture)
+        let sortedInfos = configureSortedInfos(input.selectedPoint)
         //
 //        let loading = input.ready
 //
@@ -76,11 +77,11 @@ class MainViewModel: MainViewModelType {
 //
 //
         
-        return Output(exapansion: expansion)
+        return Output(sortedInfos: sortedInfos, exapansion: expansion)
     }
 
     
-    func configureExpansion(_ selectedPoint: Driver<MapPoint>,
+    private func configureExpansion(_ selectedPoint: Driver<MapPoint>,
                             _ swipeViewGesture: Driver<Expansion>) -> Driver<Expansion> {
         let validMapPoints = smokingPlaces.map{ $0.mapPoint }
         
@@ -106,6 +107,26 @@ class MainViewModel: MainViewModelType {
         }
         
         return expansion.asDriver(onErrorJustReturn: .move(distance: 0))
+    }
+    
+    private func configureSortedInfos(_ selectedPoint: Driver<MapPoint>) -> Driver<[SmokingPlace]> {
+        
+        return selectedPoint.map{ [weak self] point -> [SmokingPlace] in
+            guard let strongSelf = self else {
+                return []
+            }
+            
+            if let selectedPointIndex = strongSelf.smokingPlaces.firstIndex(where: { (place) -> Bool in
+                return place.mapPoint == point
+            }) {
+                var tmpArr = strongSelf.smokingPlaces
+                let selectedPlace = tmpArr.remove(at: selectedPointIndex)
+                return [selectedPlace] + tmpArr
+            }
+            else {
+                return strongSelf.smokingPlaces
+            }
+        }
     }
 
     

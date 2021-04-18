@@ -76,31 +76,42 @@ class MainVC: UIViewController {
                                         swipeViewGesture: placeListContainerView.asPanGestureDriver().debug())
         
         let output = mainViewModel.transform(input: input)
+        // Expansion
+        bindPlaceListContainerView(output.exapansion)
         
-        output.exapansion
-            .drive(onNext: { [weak self] expansion in
-                guard let strongSelf = self else {
-                    return
-                }
-                
-                switch expansion {
-                case .high:
-                    strongSelf.placeListContainerViewTopConstraint.constant = strongSelf.view.frame.height / 6
-                case .low:
-                    strongSelf.placeListContainerViewTopConstraint.constant = strongSelf.view.frame.height - strongSelf.placeListContainerView.SWIPEVIEW_HEIGHT
-                case .middle:
-                    strongSelf.placeListContainerViewTopConstraint.constant = strongSelf.view.frame.height - strongSelf.placeListContainerView.CELL_HEIGHT - strongSelf.placeListContainerView.SWIPEVIEW_HEIGHT
-                case .move(let distance):
-                    strongSelf.placeListContainerViewTopConstraint.constant += distance
-                }
-                
-                UIView.animate(withDuration: 0.2) {
-                    strongSelf.view.layoutIfNeeded()
-                }
-        }).disposed(by: disposeBag)
-        
+        // Select
+        placeListContainerView
+            .bindPlaceListViewData(output.sortedInfos)
+            .disposed(by: disposeBag)
         
     }
+    
+    func bindPlaceListContainerView(_ expansion: Driver<Expansion>) {
+        expansion.drive(onNext: { [weak self] expansion in
+            guard let strongSelf = self else {
+                return
+            }
+            
+            switch expansion {
+            case .high:
+                strongSelf.placeListContainerViewTopConstraint.constant = strongSelf.view.frame.height / 6
+            case .low:
+                strongSelf.placeListContainerViewTopConstraint.constant = strongSelf.view.frame.height - strongSelf.placeListContainerView.SWIPEVIEW_HEIGHT
+            case .middle:
+                strongSelf.placeListContainerViewTopConstraint.constant = strongSelf.view.frame.height - strongSelf.placeListContainerView.CELL_HEIGHT - strongSelf.placeListContainerView.SWIPEVIEW_HEIGHT
+            case .move(let distance):
+                strongSelf.placeListContainerViewTopConstraint.constant += distance
+            }
+            
+            UIView.animate(withDuration: 0.2) {
+                strongSelf.view.layoutIfNeeded()
+            }
+        }).disposed(by: disposeBag)
+        
+
+        
+    }
+    
     
     func moveToPoint(latitude: Double, longitude: Double){
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: latitude, lng: longitude))
