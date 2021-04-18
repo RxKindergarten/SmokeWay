@@ -18,19 +18,24 @@ protocol MainViewModelType  {
 }
 
 class MainViewModel: MainViewModelType {
-    
-    
+//    37.49617587529766, longitude: 127.01892512111017))
+    var smokingPlaces: [SmokingPlace] = [SmokingPlace(idx: 1, name: "1", mapPoint: MapPoint(latitude: 37.49617587529766, longitude: 127.015), detail: ["test1"]),
+                                         SmokingPlace(idx: 2, name: "2", mapPoint: MapPoint(latitude: 37.48, longitude: 127.01892512111017), detail: ["test2"]),
+                                         SmokingPlace(idx: 3, name: "3", mapPoint: MapPoint(latitude: 39.0, longitude: 105.0), detail: ["test3"]),
+                                         SmokingPlace(idx: 4, name: "4", mapPoint: MapPoint(latitude: 35.0, longitude: 121.0), detail: ["test4"])
+    ]
+    let disposeBag = DisposeBag()
     
     struct Input {
-//        let ready: Observable<Bool>
-//        let currentPoint: Driver<MapPoint>
+        let ready: Driver<Bool>
+        let currentPoint: Observable<MapPoint>
         let selectedPoint: Driver<MapPoint>
         let swipeViewGesture: Driver<Expansion>
     }
     
     struct Output {
-//        let loading: Driver<Bool>
-//        let surroundInfos: Driver<[SmokingPlace]>
+        let loading: Driver<Bool>
+        let surroundInfos: Driver<[SmokingPlace]>
         let sortedInfos: Driver<[SmokingPlace]>
         let exapansion: Driver<Expansion>
 //        let detailInfo: Driver<SmokingPlace>
@@ -42,44 +47,50 @@ class MainViewModel: MainViewModelType {
         
     }
     
-    func transform(input: Input) -> Output {
-        
-    
-        let expansion = configureExpansion(input.selectedPoint, input.swipeViewGesture)
-        let sortedInfos = configureSortedInfos(input.selectedPoint)
-        //
-//        let loading = input.ready
-//
-//        var surroudInfoList : [SmokingPlace] = []
-//        var curpos: MapPoint
-//
-//        let currentPosition = input.currentPoint { (latitude, longitude) in
-//            return MapPoint(latitude: latitude, longitude: longitude)
-//
-//
-//        }
-//
-//        input.currentPoint
-//            .subscribe(onNext: {_ in
-//                currentPosition = input.currentPoint
-//
-//            })
-//
-//        for place in smokingPlaces {
-//            if place.mapPoint.latitude >= currentPosition.lati
-//        }
-//
-//
-//
-//
-//        return Output(loading: loading, surroundInfos: surroundInfos, sortedInfos: <#T##Driver<[SmokingPlace]>#>, exapansion: <#T##Driver<Expansion>#>, detailInfo: <#T##Driver<SmokingPlace>#>)
-//
-//
-//
-        
-        return Output(sortedInfos: sortedInfos, exapansion: expansion)
+    func getNearbyPlaces(latitude: Double,longitude: Double) -> [SmokingPlace] {
+        var nearBy :[SmokingPlace] = []
+        for place in smokingPlaces {
+            if place.mapPoint.latitude >= latitude*0.9 && place.mapPoint.latitude >= latitude*1.1
+                && place.mapPoint.longitude >= longitude*0.9  && place.mapPoint.longitude >= longitude*1.1 {
+                nearBy.append(place)
+            }
+        }
+        return nearBy
     }
+    
+    
+    func transform(input: Input) -> Output {
 
+        let loading = input.ready
+        var surroudInfoList : [SmokingPlace] = []
+        let surroundRelay = BehaviorRelay(value: [SmokingPlace(idx: 0, name: "1", mapPoint: MapPoint(latitude: 0.0, longitude: 0.0), detail: ["123"])])
+
+    
+        input.currentPoint
+            .subscribe(onNext: { mapPoint in
+                print("currentPointRelayCalled")
+                surroudInfoList = []
+                for place in self.smokingPlaces {
+                    if place.mapPoint.latitude >= mapPoint.latitude*0.9 && place.mapPoint.latitude <= mapPoint.latitude*1.1
+                        && place.mapPoint.longitude >= mapPoint.longitude*0.9  && place.mapPoint.longitude <= mapPoint.longitude*1.1 {
+                        surroudInfoList.append(place)
+                        
+                    }
+                }
+             
+                surroundRelay.accept(surroudInfoList)
+            }).disposed(by: disposeBag)
+        
+        let sortedInfos = configureSortedInfos(input.selectedPoint)
+        let expansion = configureExpansion(input.selectedPoint, input.swipeViewGesture)
+
+        
+        return Output(loading: loading,
+                      surroundInfos: surroundRelay.asDriver(onErrorJustReturn: []),
+                      sortedInfos: sortedInfos,
+                      exapansion: expansion)
+    }
+    
     
     private func configureExpansion(_ selectedPoint: Driver<MapPoint>,
                             _ swipeViewGesture: Driver<Expansion>) -> Driver<Expansion> {
@@ -129,9 +140,9 @@ class MainViewModel: MainViewModelType {
         }
     }
 
+        
     
-    
-    let smokingPlaces: [SmokingPlace] = []
+        
 }
 
 

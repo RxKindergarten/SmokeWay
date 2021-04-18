@@ -10,6 +10,8 @@ import Firebase
 import NMapsMap
 import CoreLocation
 import SnapKit
+import RxSwift
+import RxCocoa
 
 import RxSwift
 import RxCocoa
@@ -27,17 +29,22 @@ class MainVC: UIViewController {
     
     // MARK:- Fields
     let locationManager = CLLocationManager()
+    let ready = BehaviorRelay(value: true)
+    let currentPointRelay = BehaviorRelay(value: MapPoint(latitude: 0.0, longitude: 0.0))
+    var mainViewModel = MainViewModel()
+    var disposeBag = DisposeBag()
     var currentPoint: MapPoint? {
         didSet{
             let locationOverlay = mapView.locationOverlay
             locationOverlay.location = NMGLatLng(lat: currentPoint?.latitude ?? 0.0, lng: currentPoint?.longitude ?? 0.0)
             moveToPoint(latitude: currentPoint?.latitude ?? 0.0, longitude: currentPoint?.longitude ?? 0.0)
+            currentPointRelay.accept(currentPoint!)
+            print(currentPoint)
         }
     }
     
-    let mainViewModel: MainViewModel = MainViewModel()
-    let disposeBag = DisposeBag()
-
+    private var input: MainViewModel.Input!
+    private var output: MainViewModel.Output!
     
     
 
@@ -51,38 +58,51 @@ class MainVC: UIViewController {
      
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        placeListContainerViewTopConstraint = placeListContainerView
-            .topAnchor
-            .constraint(equalTo: view.topAnchor,
-                        constant: view.frame.height - placeListContainerView.SWIPEVIEW_HEIGHT + view.safeAreaInsets.bottom)
-        placeListContainerViewTopConstraint.isActive = true
-    }
-    private func initLayout() {
-        view.addSubview(placeListContainerView)
-
-        NSLayoutConstraint.activate([
-            placeListContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            placeListContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            placeListContainerView.heightAnchor.constraint(equalToConstant: view.frame.height * 5 / 6)
-        ])
-        
-    }
-    
     private func bindViewModel() {
-        let input = MainViewModel.Input(selectedPoint: Driver.just(MapPoint(latitude: 0, longitude: 0)),
-                                        swipeViewGesture: placeListContainerView.asPanGestureDriver().debug())
+        input = MainViewModel.Input(ready: ready.asDriver() ,
+                                    currentPoint: currentPointRelay.asObservable(),
+                                    selectedPoint: Driver.just(MapPoint(latitude: 0, longitude: 0)),
+                                    swipeViewGesture: placeListContainerView.asPanGestureDriver())
+        output = mainViewModel.transform(input: input)
         
-        let output = mainViewModel.transform(input: input)
+        print("bindViewModel")
+        print(output.surroundInfos)
+        output.surroundInfos.drive(onNext: { infoList in
+            for info in infoList {
+                let marker = NMFMarker()
+                marker.position = NMGLatLng(lat: info.mapPoint.latitude, lng: info.mapPoint.longitude)
+                marker.mapView = self.mapView
+                print("here")
+                
+            }
+        }, onCompleted: {
+            
+        }, onDisposed: {
+            
+        })
+        
         // Expansion
         bindPlaceListContainerView(output.exapansion)
         
         // Select
         placeListContainerView
             .bindPlaceListViewData(output.sortedInfos)
-            .disposed(by: disposeBag)
+            .disposed(by: disposeBag)    }
+    
+    private func initLayout() {
+        view.addSubview(placeListContainerView)
+        
+        placeListContainerViewTopConstraint = placeListContainerView
+            .topAnchor
+            .constraint(equalTo: view.topAnchor,
+                        constant: view.frame.height - placeListContainerView.SWIPEVIEW_HEIGHT + view.safeAreaInsets.bottom)
+        placeListContainerViewTopConstraint.isActive = true
+
+        NSLayoutConstraint.activate([
+            placeListContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            placeListContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            placeListContainerView.heightAnchor.constraint(equalToConstant: view.frame.height * 5 / 6)
+        ])
         
     }
     
@@ -150,13 +170,7 @@ class MainVC: UIViewController {
         locationOverlay.subIconHeight = 40
         locationOverlay.subAnchor = CGPoint(x: 0.5, y: 1)
         
-//        마커 설정하는 법
-        let marker = NMFMarker()
-        marker.position = NMGLatLng(lat: 37.5670135, lng: 126.9783740)
-        marker.mapView = mapView
-        
-        let infoWindow = NMFInfoWindow()
-        infoWindow.open(with: marker)
+
         
     }
     
@@ -169,6 +183,7 @@ extension MainVC: CLLocationManagerDelegate {
         print("didUpdateLocations")
         if let coor = manager.location?.coordinate {
             currentPoint = MapPoint(latitude: coor.latitude, longitude: coor.longitude)
+//            print(currentPoint)
         }
     }
     
