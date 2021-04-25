@@ -107,6 +107,7 @@ class MainVC: UIViewController {
     }
     
     private func bindPlaceListContainerView(_ expansion: Driver<Expansion>, _ selectEvent: Driver<Bool>) {
+        // SwipeGesture
         expansion.drive(onNext: { [weak self] expansion in
             guard let strongSelf = self else {
                 return
@@ -126,6 +127,7 @@ class MainVC: UIViewController {
             }
         }).disposed(by: disposeBag)
         
+        // Select
         selectEvent.drive(onNext: { [weak self] isSelected in
             if isSelected {
                 self?.movePlaceListContainerViewMiddle()
@@ -134,19 +136,23 @@ class MainVC: UIViewController {
     }
     
     private func movePlaceListContainerViewLow() {
-        self.placeListContainerViewTopConstraint.constant = self.view.frame.height - self.placeListContainerView.SWIPEVIEW_HEIGHT
+        placeListContainerViewTopConstraint.constant = view.frame.height - placeListContainerView.SWIPEVIEW_HEIGHT
     }
     
     private func movePlaceListContainerViewHigh() {
-        self.placeListContainerViewTopConstraint.constant = self.view.frame.height / 6
+        placeListContainerViewTopConstraint.constant = view.frame.height / 6
     }
     
     private func movePlaceListContainerViewMiddle() {
-        self.placeListContainerViewTopConstraint.constant = self.view.frame.height - self.placeListContainerView.CELL_HEIGHT - self.placeListContainerView.SWIPEVIEW_HEIGHT
+        placeListContainerViewTopConstraint.constant = view.frame.height - placeListContainerView.CELL_HEIGHT - placeListContainerView.SWIPEVIEW_HEIGHT
     }
     
     private func movePlaceListContainerDistance(constant: CGFloat) {
-        self.placeListContainerViewTopConstraint.constant += constant
+        var changedPosition = placeListContainerViewTopConstraint.constant + constant
+        if changedPosition < view.frame.height / 6 {
+            changedPosition = placeListContainerViewTopConstraint.constant
+        }
+        placeListContainerViewTopConstraint.constant = changedPosition
     }
     
     
