@@ -82,7 +82,7 @@ class MainVC: UIViewController {
         })
         
         // Expansion
-        bindPlaceListContainerView(output.exapansion)
+        bindPlaceListContainerView(output.exapansion, output.selectEvent)
         
         // Select
         placeListContainerView
@@ -106,7 +106,7 @@ class MainVC: UIViewController {
         
     }
     
-    func bindPlaceListContainerView(_ expansion: Driver<Expansion>) {
+    private func bindPlaceListContainerView(_ expansion: Driver<Expansion>, _ selectEvent: Driver<Bool>) {
         expansion.drive(onNext: { [weak self] expansion in
             guard let strongSelf = self else {
                 return
@@ -114,13 +114,11 @@ class MainVC: UIViewController {
             
             switch expansion {
             case .high:
-                strongSelf.placeListContainerViewTopConstraint.constant = strongSelf.view.frame.height / 6
+                strongSelf.movePlaceListContainerViewHigh()
             case .low:
-                strongSelf.placeListContainerViewTopConstraint.constant = strongSelf.view.frame.height - strongSelf.placeListContainerView.SWIPEVIEW_HEIGHT
-            case .middle:
-                strongSelf.placeListContainerViewTopConstraint.constant = strongSelf.view.frame.height - strongSelf.placeListContainerView.CELL_HEIGHT - strongSelf.placeListContainerView.SWIPEVIEW_HEIGHT
+                strongSelf.movePlaceListContainerViewLow()
             case .move(let distance):
-                strongSelf.placeListContainerViewTopConstraint.constant += distance
+                strongSelf.movePlaceListContainerDistance(constant: distance)
             }
             
             UIView.animate(withDuration: 0.2) {
@@ -128,8 +126,27 @@ class MainVC: UIViewController {
             }
         }).disposed(by: disposeBag)
         
-
-        
+        selectEvent.drive(onNext: { [weak self] isSelected in
+            if isSelected {
+                self?.movePlaceListContainerViewMiddle()
+            }
+        }).disposed(by: disposeBag)
+    }
+    
+    private func movePlaceListContainerViewLow() {
+        self.placeListContainerViewTopConstraint.constant = self.view.frame.height - self.placeListContainerView.SWIPEVIEW_HEIGHT
+    }
+    
+    private func movePlaceListContainerViewHigh() {
+        self.placeListContainerViewTopConstraint.constant = self.view.frame.height / 6
+    }
+    
+    private func movePlaceListContainerViewMiddle() {
+        self.placeListContainerViewTopConstraint.constant = self.view.frame.height - self.placeListContainerView.CELL_HEIGHT - self.placeListContainerView.SWIPEVIEW_HEIGHT
+    }
+    
+    private func movePlaceListContainerDistance(constant: CGFloat) {
+        self.placeListContainerViewTopConstraint.constant += constant
     }
     
     
