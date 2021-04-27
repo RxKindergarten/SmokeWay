@@ -46,7 +46,7 @@ class MainVC: UIViewController {
     private var input: MainViewModel.Input!
     private var output: MainViewModel.Output!
     
-    
+    let infoWindow = NMapsMap.NMFInfoWindow()
 
     // MARK:- Life Cycle
     override func viewDidLoad() {
@@ -66,12 +66,25 @@ class MainVC: UIViewController {
         output = mainViewModel.transform(input: input)
         
         print("bindViewModel")
+        let handler = { [weak self] (overlay: NMFOverlay) -> Bool in
+            if let marker = overlay as? NMFMarker {
+                if marker.infoWindow == nil {
+                    // 현재 마커에 정보 창이 열려있지 않을 경우 엶
+                    self?.infoWindow.open(with: marker)
+                } else {
+                    // 이미 현재 마커에 정보 창이 열려있을 경우 닫음
+                    self?.infoWindow.close()
+                }
+            }
+            return true
+        };
         print(output.surroundInfos)
         output.surroundInfos.drive(onNext: { infoList in
             for info in infoList {
                 let marker = NMFMarker()
                 marker.position = NMGLatLng(lat: info.mapPoint.latitude, lng: info.mapPoint.longitude)
                 marker.mapView = self.mapView
+                
                 print("here")
                 
             }
