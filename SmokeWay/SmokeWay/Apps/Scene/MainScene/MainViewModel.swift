@@ -31,6 +31,7 @@ class MainViewModel: MainViewModelType {
         let currentPoint: Observable<MapPoint>
         let selectedPoint: Driver<MapPoint>
         let swipeViewGesture: Driver<Expansion>
+        let itemSelectEvent: Driver<IndexPath>
     }
     
     struct Output {
@@ -39,7 +40,7 @@ class MainViewModel: MainViewModelType {
         let sortedInfos: Driver<[SmokingPlace]>
         let exapansion: Driver<Expansion>
         let selectEvent: Driver<Bool>
-//        let detailInfo: Driver<SmokingPlace>
+        let detailInfo: Driver<SmokingPlace>
         
     }
     
@@ -65,7 +66,6 @@ class MainViewModel: MainViewModelType {
         let loading = input.ready
         var surroudInfoList : [SmokingPlace] = []
         let surroundRelay = BehaviorRelay(value: [SmokingPlace(idx: 0, name: "1", mapPoint: MapPoint(latitude: 0.0, longitude: 0.0), detail: ["123"])])
-
     
         input.currentPoint
             .subscribe(onNext: { mapPoint in
@@ -84,12 +84,14 @@ class MainViewModel: MainViewModelType {
         
         let sortedInfos = configureSortedInfos(input.selectedPoint)
         let selectEvent = configureSelectEvent(input.selectedPoint)
+        let detailInfo = configureItemSelect(input.itemSelectEvent)
         
         return Output(loading: loading,
                       surroundInfos: surroundRelay.asDriver(onErrorJustReturn: []),
                       sortedInfos: sortedInfos,
                       exapansion: input.swipeViewGesture,
-                      selectEvent: selectEvent)
+                      selectEvent: selectEvent,
+                      detailInfo: detailInfo)
     }
     
     
@@ -119,6 +121,10 @@ class MainViewModel: MainViewModelType {
                 return strongSelf.smokingPlaces
             }
         }
+    }
+    
+    private func configureItemSelect(_ selectEvent: Driver<IndexPath>) -> Driver<SmokingPlace> {
+        return selectEvent.map{ [weak self] in return self!.smokingPlaces[$0.row] }
     }
 
         

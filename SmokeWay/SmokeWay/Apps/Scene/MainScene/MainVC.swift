@@ -62,7 +62,8 @@ class MainVC: UIViewController {
         input = MainViewModel.Input(ready: ready.asDriver() ,
                                     currentPoint: currentPointRelay.asObservable(),
                                     selectedPoint: Driver.just(MapPoint(latitude: 0, longitude: 0)),
-                                    swipeViewGesture: placeListContainerView.asPanGestureDriver())
+                                    swipeViewGesture: placeListContainerView.asPanGestureDriver(),
+                                    itemSelectEvent: placeListContainerView.asItemSelectDriver())
         output = mainViewModel.transform(input: input)
         
         print("bindViewModel")
@@ -87,7 +88,10 @@ class MainVC: UIViewController {
         // Select
         placeListContainerView
             .bindPlaceListViewData(output.sortedInfos)
-            .disposed(by: disposeBag)    }
+            .disposed(by: disposeBag)
+        
+        presentDetailView(output.detailInfo)
+    }
     
     private func initLayout() {
         view.addSubview(placeListContainerView)
@@ -133,6 +137,16 @@ class MainVC: UIViewController {
                 self?.movePlaceListContainerViewMiddle()
             }
         }).disposed(by: disposeBag)
+    }
+    
+    private func presentDetailView(_ detailInfo: Driver<SmokingPlace>) {
+        detailInfo.drive(onNext: { [weak self] smokingPlace in
+            guard let detailVC = DetailVC.instantiateDetailVC(selectedPlace: smokingPlace) else {
+                return
+            }
+            self?.show(detailVC, sender: nil)
+        }).disposed(by: disposeBag)
+        
     }
     
     private func movePlaceListContainerViewLow() {

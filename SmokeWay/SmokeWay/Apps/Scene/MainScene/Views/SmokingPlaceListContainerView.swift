@@ -115,6 +115,10 @@ class SmokingPlaceListContainerView: UIView {
         }
     }
     
+    internal func asItemSelectDriver() -> Driver<IndexPath> {
+        return placeListTableView.rx.itemSelected.asDriver()
+    }
+    
     internal func bindPlaceListViewData(_ sortedInfos: Driver<[SmokingPlace]>) -> Disposable {
         return sortedInfos
             .asObservable()
