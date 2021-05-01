@@ -14,7 +14,7 @@ protocol MainViewModelType  {
     associatedtype Input
     associatedtype Output
     
-//    func transform(input: Input) -> Output
+    func transform(input: Input) -> Output
 }
 
 class MainViewModel: MainViewModelType {
