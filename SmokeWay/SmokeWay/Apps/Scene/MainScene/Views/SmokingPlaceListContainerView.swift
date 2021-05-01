@@ -103,8 +103,12 @@ class SmokingPlaceListContainerView: UIView {
             // 세로로 움직일 때
             if abs(velocity.y) > abs(velocity.x) {
                 let isUp = velocity.y < 0
-                if isUp { return strongSelf.moveUp(constant: transition.y, state: gesture.state) }
-                else { return strongSelf.moveDown(constant: transition.y, state: gesture.state) }
+                if isUp {
+                    return strongSelf.moveUp(constant: transition.y, state: gesture.state)
+                }
+                else {
+                    return strongSelf.moveDown(constant: transition.y, state: gesture.state)
+                }
             }
             
             return .move(distance: 0)
@@ -112,10 +116,13 @@ class SmokingPlaceListContainerView: UIView {
     }
     
     internal func bindPlaceListViewData(_ sortedInfos: Driver<[SmokingPlace]>) -> Disposable {
-        return sortedInfos.asObservable().bind(to: self.placeListTableView.rx.items(cellIdentifier: "PlaceListTVCell", cellType: PlaceListTVCell.self)){ (index, element, cell) in
-            cell.titleLabel.text = element.name
-            cell.addressLabel.text = element.name
-        }
+        return sortedInfos
+            .asObservable()
+            .bind(to: self.placeListTableView.rx.items(cellIdentifier: "PlaceListTVCell",
+                                                       cellType: PlaceListTVCell.self)){ (index, element, cell) in
+                cell.titleLabel.text = element.name
+                cell.addressLabel.text = element.name
+            }
     }
     // MARK:- Private function
     private func moveUp(constant: CGFloat, state: UIPanGestureRecognizer.State) -> Expansion {
@@ -139,16 +146,3 @@ class SmokingPlaceListContainerView: UIView {
     }
     
 }
-//
-//extension SmokingPlaceListContainerView: UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 5
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PlaceListTVCell", for: indexPath)
-//                as? PlaceListTVCell else { return UITableViewCell()}
-//
-//        return cell
-//    }
-//}

@@ -23,6 +23,9 @@
 		A238DDFA2608D914000F50E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A238DDF82608D914000F50E3 /* Main.storyboard */; };
 		A238DDFC2608D915000F50E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A238DDFB2608D915000F50E3 /* Assets.xcassets */; };
 		A238DDFF2608D915000F50E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A238DDFD2608D915000F50E3 /* LaunchScreen.storyboard */; };
+		A25434A82635598E00363858 /* Detail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A25434A72635598E00363858 /* Detail.storyboard */; };
+		A25434AB263559A800363858 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25434AA263559A800363858 /* DetailVC.swift */; };
+		A25434AE26355BB300363858 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25434AD26355BB300363858 /* DetailViewModel.swift */; };
 		A2EC393E261620DC0011B325 /* PlaceListTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EC393C261620DC0011B325 /* PlaceListTVCell.swift */; };
 		A2EC393F261620DC0011B325 /* PlaceListTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2EC393D261620DC0011B325 /* PlaceListTVCell.xib */; };
 		EC1E6C6E260B670A00CCA8A4 /* MapPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1E6C6D260B670A00CCA8A4 /* MapPoint.swift */; };
@@ -50,6 +53,9 @@
 		A238DDFB2608D915000F50E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A238DDFE2608D915000F50E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A238DE002608D915000F50E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = SmokeWay/Supports/Info.plist; sourceTree = SOURCE_ROOT; };
+		A25434A72635598E00363858 /* Detail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Detail.storyboard; sourceTree = "<group>"; };
+		A25434AA263559A800363858 /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
+		A25434AD26355BB300363858 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		A2EC393C261620DC0011B325 /* PlaceListTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListTVCell.swift; sourceTree = "<group>"; };
 		A2EC393D261620DC0011B325 /* PlaceListTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceListTVCell.xib; sourceTree = "<group>"; };
 		EC1E6C6D260B670A00CCA8A4 /* MapPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPoint.swift; sourceTree = "<group>"; };
@@ -138,6 +144,7 @@
 		A20C9A1C2608E30E00AB8243 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				A25434A62635597700363858 /* DetailScene */,
 				A20C9A222608E43600AB8243 /* MainScene */,
 			);
 			path = Scene;
@@ -202,6 +209,16 @@
 				A20C9A0C2608E1D200AB8243 /* Apps */,
 			);
 			path = SmokeWay;
+			sourceTree = "<group>";
+		};
+		A25434A62635597700363858 /* DetailScene */ = {
+			isa = PBXGroup;
+			children = (
+				A25434A72635598E00363858 /* Detail.storyboard */,
+				A25434AA263559A800363858 /* DetailVC.swift */,
+				A25434AD26355BB300363858 /* DetailViewModel.swift */,
+			);
+			path = DetailScene;
 			sourceTree = "<group>";
 		};
 		A29986DB2618C75C00E0A278 /* Xibs */ = {
@@ -276,6 +293,7 @@
 				A238DDFC2608D915000F50E3 /* Assets.xcassets in Resources */,
 				A238DDFA2608D914000F50E3 /* Main.storyboard in Resources */,
 				A2EC393F261620DC0011B325 /* PlaceListTVCell.xib in Resources */,
+				A25434A82635598E00363858 /* Detail.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +351,7 @@
 				EC1E6C6E260B670A00CCA8A4 /* MapPoint.swift in Sources */,
 				A20C9A162608E29000AB8243 /* SmokingPlace.swift in Sources */,
 				A238DDF32608D914000F50E3 /* AppDelegate.swift in Sources */,
+				A25434AB263559A800363858 /* DetailVC.swift in Sources */,
 				A20C9A5F2614E8BC00AB8243 /* UITextField+Extensions.swift in Sources */,
 				A20C9A1A2608E2E500AB8243 /* Networking.swift in Sources */,
 				A20C9A5C2614E85C00AB8243 /* UIViewController+Extensions.swift in Sources */,
@@ -342,6 +361,7 @@
 				A238DDF52608D914000F50E3 /* SceneDelegate.swift in Sources */,
 				A20C9A592614E82800AB8243 /* UIView+Extensions.swift in Sources */,
 				A20C9A102608E23D00AB8243 /* UIColor+Extensions.swift in Sources */,
+				A25434AE26355BB300363858 /* DetailViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,7 +9,6 @@ import UIKit
 
 enum Expansion {
     case low
-    case middle
     case high
     case move(distance: CGFloat)
 }

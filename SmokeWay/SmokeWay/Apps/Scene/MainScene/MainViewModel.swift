@@ -14,7 +14,7 @@ protocol MainViewModelType  {
     associatedtype Input
     associatedtype Output
     
-//    func transform(input: Input) -> Output
+    func transform(input: Input) -> Output
 }
 
 class MainViewModel: MainViewModelType {
@@ -38,6 +38,7 @@ class MainViewModel: MainViewModelType {
         let surroundInfos: Driver<[SmokingPlace]>
         let sortedInfos: Driver<[SmokingPlace]>
         let exapansion: Driver<Expansion>
+        let selectEvent: Driver<Bool>
 //        let detailInfo: Driver<SmokingPlace>
         
     }
@@ -82,42 +83,22 @@ class MainViewModel: MainViewModelType {
             }).disposed(by: disposeBag)
         
         let sortedInfos = configureSortedInfos(input.selectedPoint)
-        let expansion = configureExpansion(input.selectedPoint, input.swipeViewGesture)
-
+        let selectEvent = configureSelectEvent(input.selectedPoint)
         
         return Output(loading: loading,
                       surroundInfos: surroundRelay.asDriver(onErrorJustReturn: []),
                       sortedInfos: sortedInfos,
-                      exapansion: expansion)
+                      exapansion: input.swipeViewGesture,
+                      selectEvent: selectEvent)
     }
     
     
-    private func configureExpansion(_ selectedPoint: Driver<MapPoint>,
-                            _ swipeViewGesture: Driver<Expansion>) -> Driver<Expansion> {
+    private func configureSelectEvent(_ selectedPoint: Driver<MapPoint>) -> Driver<Bool> {
         let validMapPoints = smokingPlaces.map{ $0.mapPoint }
         
-        let selectedValidInput = selectedPoint.map { return validMapPoints.contains($0) }
-        
-        let expansion = Observable.combineLatest(selectedValidInput.asObservable(),
-                                                 swipeViewGesture.asObservable()) { (isSelected, swipe) -> Expansion in
-            
-            if isSelected {
-                return .middle
-            }
-            
-            switch swipe {
-            case .high:
-                return .high
-            case .low:
-                return .low
-            case .move(let distance):
-                return .move(distance: distance)
-            case .middle:
-                return .middle
-            }
+        return selectedPoint.map {
+            return validMapPoints.contains($0)
         }
-        
-        return expansion.asDriver(onErrorJustReturn: .move(distance: 0))
     }
     
     private func configureSortedInfos(_ selectedPoint: Driver<MapPoint>) -> Driver<[SmokingPlace]> {

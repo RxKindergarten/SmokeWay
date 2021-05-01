@@ -82,7 +82,7 @@ class MainVC: UIViewController {
         })
         
         // Expansion
-        bindPlaceListContainerView(output.exapansion)
+        bindPlaceListContainerView(output.exapansion, output.selectEvent)
         
         // Select
         placeListContainerView
@@ -106,7 +106,8 @@ class MainVC: UIViewController {
         
     }
     
-    func bindPlaceListContainerView(_ expansion: Driver<Expansion>) {
+    private func bindPlaceListContainerView(_ expansion: Driver<Expansion>, _ selectEvent: Driver<Bool>) {
+        // SwipeGesture
         expansion.drive(onNext: { [weak self] expansion in
             guard let strongSelf = self else {
                 return
@@ -114,13 +115,11 @@ class MainVC: UIViewController {
             
             switch expansion {
             case .high:
-                strongSelf.placeListContainerViewTopConstraint.constant = strongSelf.view.frame.height / 6
+                strongSelf.movePlaceListContainerViewHigh()
             case .low:
-                strongSelf.placeListContainerViewTopConstraint.constant = strongSelf.view.frame.height - strongSelf.placeListContainerView.SWIPEVIEW_HEIGHT
-            case .middle:
-                strongSelf.placeListContainerViewTopConstraint.constant = strongSelf.view.frame.height - strongSelf.placeListContainerView.CELL_HEIGHT - strongSelf.placeListContainerView.SWIPEVIEW_HEIGHT
+                strongSelf.movePlaceListContainerViewLow()
             case .move(let distance):
-                strongSelf.placeListContainerViewTopConstraint.constant += distance
+                strongSelf.movePlaceListContainerDistance(constant: distance)
             }
             
             UIView.animate(withDuration: 0.2) {
@@ -128,8 +127,32 @@ class MainVC: UIViewController {
             }
         }).disposed(by: disposeBag)
         
-
-        
+        // Select
+        selectEvent.drive(onNext: { [weak self] isSelected in
+            if isSelected {
+                self?.movePlaceListContainerViewMiddle()
+            }
+        }).disposed(by: disposeBag)
+    }
+    
+    private func movePlaceListContainerViewLow() {
+        placeListContainerViewTopConstraint.constant = view.frame.height - placeListContainerView.SWIPEVIEW_HEIGHT
+    }
+    
+    private func movePlaceListContainerViewHigh() {
+        placeListContainerViewTopConstraint.constant = view.frame.height / 6
+    }
+    
+    private func movePlaceListContainerViewMiddle() {
+        placeListContainerViewTopConstraint.constant = view.frame.height - placeListContainerView.CELL_HEIGHT - placeListContainerView.SWIPEVIEW_HEIGHT
+    }
+    
+    private func movePlaceListContainerDistance(constant: CGFloat) {
+        var changedPosition = placeListContainerViewTopConstraint.constant + constant
+        if changedPosition < view.frame.height / 6 {
+            changedPosition = placeListContainerViewTopConstraint.constant
+        }
+        placeListContainerViewTopConstraint.constant = changedPosition
     }
     
     
