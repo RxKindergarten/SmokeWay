@@ -30,6 +30,9 @@
 		A2EC393F261620DC0011B325 /* PlaceListTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2EC393D261620DC0011B325 /* PlaceListTVCell.xib */; };
 		EC1E6C6E260B670A00CCA8A4 /* MapPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1E6C6D260B670A00CCA8A4 /* MapPoint.swift */; };
 		EC1E6C71260B67E900CCA8A4 /* Expansion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1E6C70260B67E900CCA8A4 /* Expansion.swift */; };
+		EC9DD8852658C4110039CAFC /* AddVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9DD8842658C4110039CAFC /* AddVC.swift */; };
+		EC9DD8872658C46E0039CAFC /* AddScene.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC9DD8862658C46E0039CAFC /* AddScene.storyboard */; };
+		EC9DD8892658D3F80039CAFC /* AddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9DD8882658D3F80039CAFC /* AddViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +64,9 @@
 		EC1E6C6D260B670A00CCA8A4 /* MapPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPoint.swift; sourceTree = "<group>"; };
 		EC1E6C70260B67E900CCA8A4 /* Expansion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expansion.swift; sourceTree = "<group>"; };
 		EC8C09B12615E0A30061F28C /* NMapsMap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NMapsMap.framework; path = Pods/NMapsMap/framework/NMapsMap.framework; sourceTree = "<group>"; };
+		EC9DD8842658C4110039CAFC /* AddVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVC.swift; sourceTree = "<group>"; };
+		EC9DD8862658C46E0039CAFC /* AddScene.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddScene.storyboard; sourceTree = "<group>"; };
+		EC9DD8882658D3F80039CAFC /* AddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +150,7 @@
 		A20C9A1C2608E30E00AB8243 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				EC9DD8832658C3F20039CAFC /* AddScene */,
 				A25434A62635597700363858 /* DetailScene */,
 				A20C9A222608E43600AB8243 /* MainScene */,
 			);
@@ -229,6 +236,16 @@
 			path = Xibs;
 			sourceTree = "<group>";
 		};
+		EC9DD8832658C3F20039CAFC /* AddScene */ = {
+			isa = PBXGroup;
+			children = (
+				EC9DD8842658C4110039CAFC /* AddVC.swift */,
+				EC9DD8862658C46E0039CAFC /* AddScene.storyboard */,
+				EC9DD8882658D3F80039CAFC /* AddViewModel.swift */,
+			);
+			path = AddScene;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -292,6 +309,7 @@
 				A20C9A3C2608E99200AB8243 /* GoogleService-Info.plist in Resources */,
 				A238DDFC2608D915000F50E3 /* Assets.xcassets in Resources */,
 				A238DDFA2608D914000F50E3 /* Main.storyboard in Resources */,
+				EC9DD8872658C46E0039CAFC /* AddScene.storyboard in Resources */,
 				A2EC393F261620DC0011B325 /* PlaceListTVCell.xib in Resources */,
 				A25434A82635598E00363858 /* Detail.storyboard in Resources */,
 			);
@@ -352,6 +370,8 @@
 				A20C9A162608E29000AB8243 /* SmokingPlace.swift in Sources */,
 				A238DDF32608D914000F50E3 /* AppDelegate.swift in Sources */,
 				A25434AB263559A800363858 /* DetailVC.swift in Sources */,
+				EC9DD8892658D3F80039CAFC /* AddViewModel.swift in Sources */,
+				EC9DD8852658C4110039CAFC /* AddVC.swift in Sources */,
 				A20C9A5F2614E8BC00AB8243 /* UITextField+Extensions.swift in Sources */,
 				A20C9A1A2608E2E500AB8243 /* Networking.swift in Sources */,
 				A20C9A5C2614E85C00AB8243 /* UIViewController+Extensions.swift in Sources */,
