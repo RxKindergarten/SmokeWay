@@ -10,7 +10,7 @@
 		31F0B01315D5DDBEA18600B9 /* Pods_SmokeWay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E9295B0E5FBF73FAF621F33 /* Pods_SmokeWay.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		A20C9A102608E23D00AB8243 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20C9A0F2608E23D00AB8243 /* UIColor+Extensions.swift */; };
 		A20C9A162608E29000AB8243 /* SmokingPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20C9A152608E29000AB8243 /* SmokingPlace.swift */; };
-		A20C9A1A2608E2E500AB8243 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20C9A192608E2E500AB8243 /* Networking.swift */; };
+		A20C9A1A2608E2E500AB8243 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20C9A192608E2E500AB8243 /* NetworkingManager.swift */; };
 		A20C9A322608E6A600AB8243 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20C9A312608E6A600AB8243 /* MainVC.swift */; };
 		A20C9A3C2608E99200AB8243 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A20C9A3B2608E99200AB8243 /* GoogleService-Info.plist */; };
 		A20C9A3F2608EE5200AB8243 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20C9A3E2608EE5200AB8243 /* MainViewModel.swift */; };
@@ -26,6 +26,9 @@
 		A25434A82635598E00363858 /* Detail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A25434A72635598E00363858 /* Detail.storyboard */; };
 		A25434AB263559A800363858 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25434AA263559A800363858 /* DetailVC.swift */; };
 		A25434AE26355BB300363858 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25434AD26355BB300363858 /* DetailViewModel.swift */; };
+		A26F9567263D418100DC0C0F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26F9566263D418100DC0C0F /* NetworkManager.swift */; };
+		A2E2ADF42658BE20000856AD /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E2ADF32658BE20000856AD /* DataProvider.swift */; };
+		A2E2ADF62658C4F4000856AD /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E2ADF52658C4F4000856AD /* NetworkResult.swift */; };
 		A2EC393E261620DC0011B325 /* PlaceListTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EC393C261620DC0011B325 /* PlaceListTVCell.swift */; };
 		A2EC393F261620DC0011B325 /* PlaceListTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2EC393D261620DC0011B325 /* PlaceListTVCell.xib */; };
 		EC1E6C6E260B670A00CCA8A4 /* MapPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1E6C6D260B670A00CCA8A4 /* MapPoint.swift */; };
@@ -38,7 +41,7 @@
 		85A55777898F9303EAD6B6B2 /* Pods-SmokeWay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmokeWay.debug.xcconfig"; path = "Target Support Files/Pods-SmokeWay/Pods-SmokeWay.debug.xcconfig"; sourceTree = "<group>"; };
 		A20C9A0F2608E23D00AB8243 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		A20C9A152608E29000AB8243 /* SmokingPlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingPlace.swift; sourceTree = "<group>"; };
-		A20C9A192608E2E500AB8243 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		A20C9A192608E2E500AB8243 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		A20C9A312608E6A600AB8243 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		A20C9A3B2608E99200AB8243 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A20C9A3E2608EE5200AB8243 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -56,6 +59,9 @@
 		A25434A72635598E00363858 /* Detail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Detail.storyboard; sourceTree = "<group>"; };
 		A25434AA263559A800363858 /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		A25434AD26355BB300363858 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		A26F9566263D418100DC0C0F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		A2E2ADF32658BE20000856AD /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
+		A2E2ADF52658C4F4000856AD /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
 		A2EC393C261620DC0011B325 /* PlaceListTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListTVCell.swift; sourceTree = "<group>"; };
 		A2EC393D261620DC0011B325 /* PlaceListTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceListTVCell.xib; sourceTree = "<group>"; };
 		EC1E6C6D260B670A00CCA8A4 /* MapPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPoint.swift; sourceTree = "<group>"; };
@@ -136,7 +142,10 @@
 		A20C9A182608E2C500AB8243 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				A20C9A192608E2E500AB8243 /* Networking.swift */,
+				A20C9A192608E2E500AB8243 /* NetworkingManager.swift */,
+				A26F9566263D418100DC0C0F /* NetworkManager.swift */,
+				A2E2ADF32658BE20000856AD /* DataProvider.swift */,
+				A2E2ADF52658C4F4000856AD /* NetworkResult.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -352,16 +361,19 @@
 				A20C9A162608E29000AB8243 /* SmokingPlace.swift in Sources */,
 				A238DDF32608D914000F50E3 /* AppDelegate.swift in Sources */,
 				A25434AB263559A800363858 /* DetailVC.swift in Sources */,
+				A2E2ADF42658BE20000856AD /* DataProvider.swift in Sources */,
 				A20C9A5F2614E8BC00AB8243 /* UITextField+Extensions.swift in Sources */,
-				A20C9A1A2608E2E500AB8243 /* Networking.swift in Sources */,
+				A20C9A1A2608E2E500AB8243 /* NetworkingManager.swift in Sources */,
 				A20C9A5C2614E85C00AB8243 /* UIViewController+Extensions.swift in Sources */,
 				A20C9A322608E6A600AB8243 /* MainVC.swift in Sources */,
+				A26F9567263D418100DC0C0F /* NetworkManager.swift in Sources */,
 				A2EC393E261620DC0011B325 /* PlaceListTVCell.swift in Sources */,
 				A20C9A552614E3A900AB8243 /* SmokingPlaceListContainerView.swift in Sources */,
 				A238DDF52608D914000F50E3 /* SceneDelegate.swift in Sources */,
 				A20C9A592614E82800AB8243 /* UIView+Extensions.swift in Sources */,
 				A20C9A102608E23D00AB8243 /* UIColor+Extensions.swift in Sources */,
 				A25434AE26355BB300363858 /* DetailViewModel.swift in Sources */,
+				A2E2ADF62658C4F4000856AD /* NetworkResult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

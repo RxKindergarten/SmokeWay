@@ -55,7 +55,6 @@ class MainVC: UIViewController {
         setMapView()
         initLayout()
         bindViewModel()
-     
     }
     
     private func bindViewModel() {
