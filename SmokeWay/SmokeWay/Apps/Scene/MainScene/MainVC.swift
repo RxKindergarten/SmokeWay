@@ -80,11 +80,30 @@ class MainVC: UIViewController {
         };
         print(output.surroundInfos)
         output.surroundInfos.drive(onNext: { infoList in
+            let handler = { [weak self] (overlay: NMFOverlay) -> Bool in
+                if let marker = overlay as? NMFMarker {
+                    
+//                    여기에 marker handler 추가 필요
+                    
+                    
+//                    if marker.infoWindow == nil {
+//                        // 현재 마커에 정보 창이 열려있지 않을 경우 엶
+//                        self?.infoWindow.open(with: marker)
+//                    } else {
+//                        // 이미 현재 마커에 정보 창이 열려있을 경우 닫음
+//                        self?.infoWindow.close()
+//                        print("cal2")
+//                    }
+                }
+                return true
+            }
+            
+            
             for info in infoList {
                 let marker = NMFMarker()
                 marker.position = NMGLatLng(lat: info.mapPoint.latitude, lng: info.mapPoint.longitude)
                 marker.mapView = self.mapView
-                
+                marker.touchHandler = handler
                 print("here")
                 
             }
@@ -161,7 +180,7 @@ class MainVC: UIViewController {
         mapView.snp.makeConstraints{
             $0.top.bottom.leading.trailing.equalToSuperview()
         }
-        
+
 //        LocationManager Setting
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -196,7 +215,6 @@ extension MainVC: CLLocationManagerDelegate {
         print("didUpdateLocations")
         if let coor = manager.location?.coordinate {
             currentPoint = MapPoint(latitude: coor.latitude, longitude: coor.longitude)
-//            print(currentPoint)
         }
     }
     
@@ -213,3 +231,5 @@ extension MainVC: CLLocationManagerDelegate {
     
     
 }
+
+
